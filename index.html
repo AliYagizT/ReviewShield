@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ReviewShield</title>
+  <meta name="description" content="ReviewShield: A Multi-Signal Framework for Detecting Coordinated Fake Reviews in Turkish E-Commerce. CMPE 491 Senior Design Project, TED University.">
   <style>
     :root {
       --background: #f7f8fa;
@@ -11,6 +12,7 @@
       --text-main: #1d2330;
       --text-muted: #5b6475;
       --accent: #2f6fed;
+      --accent-soft: #eaf1ff;
       --border: #e3e6ec;
     }
     * { box-sizing: border-box; }
@@ -19,17 +21,41 @@
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       background: var(--background);
       color: var(--text-main);
-      line-height: 1.6;
+      line-height: 1.65;
     }
     header {
-      background: var(--accent);
+      background: linear-gradient(135deg, #1f4fd1, #2f6fed);
       color: #fff;
-      padding: 56px 16px 40px;
+      padding: 64px 16px 48px;
       text-align: center;
     }
-    header h1 { margin: 0 0 8px; font-size: 2.4rem; }
-    header p { margin: 0; opacity: 0.9; }
-    main { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+    header .label {
+      display: inline-block;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.15);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+    header h1 { margin: 0 0 10px; font-size: 2.6rem; }
+    header .subtitle { margin: 0 auto 12px; max-width: 640px; font-size: 1.15rem; opacity: 0.95; }
+    header .meta { margin: 0; opacity: 0.8; font-size: 0.95rem; }
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px 20px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+    }
+    nav a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; }
+    nav a:hover { color: var(--accent); }
+    main { max-width: 880px; margin: 0 auto; padding: 32px 16px 64px; }
     section {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -37,10 +63,36 @@
       padding: 24px;
       margin-bottom: 24px;
     }
-    h2 { margin-top: 0; font-size: 1.3rem; }
+    h2 { margin-top: 0; font-size: 1.35rem; }
+    h3 { margin: 0 0 6px; font-size: 1.05rem; }
+    p { margin: 0 0 12px; }
+    p:last-child { margin-bottom: 0; }
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .signal {
+      background: var(--accent-soft);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .signal p { color: var(--text-muted); font-size: 0.95rem; margin: 0; }
+    ul { padding-left: 20px; margin: 0; }
+    li { margin-bottom: 6px; }
+    .note {
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      padding: 12px 16px;
+      border-radius: 6px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 16px;
+    }
     .people-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 16px;
     }
     .person {
@@ -50,6 +102,7 @@
     }
     .person strong { display: block; }
     .person span { color: var(--text-muted); font-size: 0.9rem; }
+    .subheading { margin: 24px 0 12px; font-size: 1.05rem; }
     .button {
       display: inline-block;
       background: var(--accent);
@@ -59,56 +112,116 @@
       border-radius: 8px;
       font-weight: 600;
     }
+    .button:hover { background: #1f4fd1; }
     footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding-bottom: 32px; }
   </style>
 </head>
 <body>
 
   <header>
+    <div class="label">CMPE 491 · Senior Design Project</div>
     <h1>ReviewShield</h1>
-    <p>Bitirme Projesi · Bilgisayar Mühendisliği · TED Üniversitesi</p>
+    <p class="subtitle">A Multi-Signal Framework for Detecting Coordinated Fake Reviews in Turkish E-Commerce</p>
+    <p class="meta">Department of Computer Engineering · TED University · 2026–2027</p>
   </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#approach">Approach</a>
+    <a href="#research-questions">Research Questions</a>
+    <a href="#team">Team</a>
+    <a href="#documents">Documents</a>
+  </nav>
 
   <main>
 
     <section id="about">
-      <h2>Proje Hakkında</h2>
+      <h2>About the Project</h2>
       <p>
-        <!-- BURAYI DÜZENLE: 3-5 cümlelik proje açıklaması -->
-        ReviewShield, [problem: ör. sahte/yanıltıcı ürün yorumlarını] tespit etmeyi amaçlayan
-        [platform türü: web uygulaması / tarayıcı eklentisi] bir sistemdir. Proje,
-        [hedef kullanıcılar] için [ana fayda] sağlamayı hedeflemektedir.
+        Online product reviews strongly influence purchasing decisions, but their reliability can be damaged
+        by coordinated reviewing activity, where groups of accounts publish misleading reviews to manipulate
+        product ratings or harm competitors.
       </p>
-    </section>
-
-    <section id="team">
-      <h2>Ekip Üyeleri</h2>
-      <div class="people-grid">
-        <!-- BURAYI DÜZENLE: isimleri ve öğrenci numaralarını yaz -->
-        <div class="person"><strong>Ali [Soyad]</strong><span>Öğrenci No: ...</span></div>
-        <div class="person"><strong>[Ad Soyad]</strong><span>Öğrenci No: ...</span></div>
-        <div class="person"><strong>[Ad Soyad]</strong><span>Öğrenci No: ...</span></div>
-        <div class="person"><strong>[Ad Soyad]</strong><span>Öğrenci No: ...</span></div>
+      <p>
+        ReviewShield is a platform-independent software prototype that detects groups of accounts acting in
+        coordination in Turkish product reviews. Instead of asking <em>"Is this single review fake?"</em>,
+        it asks <em>"Is there a group of accounts behaving together?"</em> Each review may look natural on its
+        own; manipulation usually becomes visible only when review texts, posting times and account–product
+        relationships are examined together.
+      </p>
+      <p>
+        The system accepts structured review data (CSV or JSON), assigns an explainable 0–100 suspicion score
+        to candidate account groups, and presents the results in a web-based dashboard showing flagged groups,
+        supporting evidence and graph relationships.
+      </p>
+      <div class="note">
+        The suspicion score is a prioritization aid for human review, not proof that a review is fake.
+        The project uses only authorized, anonymized datasets and does not scrape e-commerce platforms.
       </div>
     </section>
 
-    <section id="advisor">
-      <h2>Danışman</h2>
+    <section id="approach">
+      <h2>Approach</h2>
+      <p>ReviewShield combines three complementary signals into a single, interpretable framework:</p>
+      <div class="signal-grid">
+        <div class="signal">
+          <h3>Turkish NLP</h3>
+          <p>Sentence embeddings measure semantic similarity between reviews, catching near-duplicates, templates and paraphrases.</p>
+        </div>
+        <div class="signal">
+          <h3>Temporal Analysis</h3>
+          <p>Rolling-window and statistical methods detect unusual review bursts and near-simultaneous activity across accounts.</p>
+        </div>
+        <div class="signal">
+          <h3>Graph Analysis</h3>
+          <p>A weighted reviewer–product graph and community detection reveal accounts that repeatedly review the same products together.</p>
+        </div>
+      </div>
+      <p style="margin-top:16px;">
+        Signals are fused into a transparent weighted score, and an ablation study compares text-only,
+        time-only, graph-only and combined configurations. Planned stack: Python, Sentence Transformers,
+        NetworkX, FastAPI and React.
+      </p>
+    </section>
+
+    <section id="research-questions">
+      <h2>Research Questions</h2>
+      <ul>
+        <li>Does combining text, temporal and graph signals improve detection of coordinated groups compared with individual signals?</li>
+        <li>How well does the approach recover controlled groups under different levels of textual similarity and temporal coordination?</li>
+        <li>Which signals contribute to a flagged result, and what common legitimate behaviors generate false alarms?</li>
+      </ul>
+    </section>
+
+    <section id="team">
+      <h2>Team</h2>
       <div class="people-grid">
-        <!-- BURAYI DÜZENLE: danışmanın unvanı ve adı -->
-        <div class="person"><strong>[Unvan] Eren Ulu</strong><span>Bilgisayar Mühendisliği Bölümü</span></div>
+        <div class="person"><strong>Sinem Şahin</strong><span>Computer Engineering</span></div>
+        <div class="person"><strong>Gizem Demirer</strong><span>Computer Engineering</span></div>
+        <div class="person"><strong>Ali Yağız Temizhan</strong><span>Computer Engineering</span></div>
+        <div class="person"><strong>Bora Özkan</strong><span>Computer Engineering</span></div>
+      </div>
+
+      <h3 class="subheading">Supervisor</h3>
+      <div class="people-grid">
+        <div class="person"><strong>Dr. Eren Ulu</strong><span>Department of Computer Engineering</span></div>
+      </div>
+
+      <h3 class="subheading">Jury Members</h3>
+      <div class="people-grid">
+        <div class="person"><strong>Dr. Ayşenur Birtürk</strong><span>Jury Member</span></div>
+        <div class="person"><strong>Dr. Mert Burkay Çöteli</strong><span>Jury Member</span></div>
       </div>
     </section>
 
     <section id="documents">
-      <h2>Belgeler</h2>
-      <!-- 4. adımda proposal.pdf dosyasını repoya yükleyince bu buton çalışacak -->
-      <a class="button" href="proposal.pdf" target="_blank">Project Proposal (PDF)</a>
+      <h2>Documents</h2>
+      <a class="button" href="proposal.pdf" target="_blank" rel="noopener">Project Proposal (PDF)</a>
     </section>
 
   </main>
 
-  <footer>© 2026 ReviewShield Ekibi</footer>
+  <footer>© 2026 ReviewShield Team · TED University</footer>
 
 </body>
 </html>
